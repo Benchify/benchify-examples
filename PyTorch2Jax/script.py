@@ -2,6 +2,17 @@ import torch
 import numpy as np
 import jax
 import jax.numpy as jnp
+from typing import Tuple
+
+# No need to test this, assume it is correct
+# Just a helper function for the apply_rotary_emb_torch function
+def reshape_for_broadcast(freqs_cis: torch.Tensor, x: torch.Tensor):
+    ndim = x.ndim
+    assert 0 <= 1 < ndim
+    assert freqs_cis.shape == (x.shape[1], x.shape[-1])
+    shape = [d if i == 1 or i == ndim - 1 else 1 for i, d in enumerate(x.shape)]
+    return freqs_cis.view(*shape)
+
 
 """
 This file contains two functions: apply_rotary_emb_torch and apply_rotary_emb_jax.
@@ -57,4 +68,5 @@ def jnp_ndarray_to_torch(x: jnp.ndarray) -> torch.Tensor:
 
 def torch_tensor_to_jnp(x: torch.Tensor) -> jnp.ndarray:
     return x.cpu().numpy().astype(np.float32)
+
 
