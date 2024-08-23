@@ -21,6 +21,7 @@ The functions should be functionally equivalent.
 
 
 # This should be equivalent to the below function (apply_rotary_emb_jax)
+
 def apply_rotary_emb_torch(
     xq: torch.Tensor,
     xk: torch.Tensor,
@@ -35,6 +36,7 @@ def apply_rotary_emb_torch(
 
 
 # This should be equivalent to the above function (apply_rotary_emb_torch)
+
 def apply_rotary_emb_jax(
     xq: jnp.ndarray,
     xk: jnp.ndarray,
@@ -65,7 +67,6 @@ The following helper functions are meant to help with test writing.
 Note that you can use torch.from_numpy(ndarray) → Tensor to get a torch
 tensor from a numpy array.
 """
-
 def jnp_ndarray_to_torch(x: jnp.ndarray) -> torch.Tensor:
     return torch.from_numpy(x.astype(np.float32))
 
