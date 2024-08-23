@@ -19,6 +19,7 @@ This file contains two functions: apply_rotary_emb_torch and apply_rotary_emb_ja
 The functions should be functionally equivalent.
 """
 
+
 # This should be equivalent to the below function (apply_rotary_emb_jax)
 def apply_rotary_emb_torch(
     xq: torch.Tensor,
@@ -31,6 +32,7 @@ def apply_rotary_emb_torch(
     xq_out = torch.view_as_real(xq_ * freqs_cis).flatten(3)
     xk_out = torch.view_as_real(xk_ * freqs_cis).flatten(3)
     return xq_out.type_as(xq), xk_out.type_as(xk)
+
 
 # This should be equivalent to the above function (apply_rotary_emb_torch)
 def apply_rotary_emb_jax(
@@ -65,6 +67,7 @@ tensor from a numpy array.
 """
 def jnp_ndarray_to_torch(x: jnp.ndarray) -> torch.Tensor:
     return torch.from_numpy(x.astype(np.float32))
+
 
 def torch_tensor_to_jnp(x: torch.Tensor) -> jnp.ndarray:
     return x.cpu().numpy().astype(np.float32)
