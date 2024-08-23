@@ -13,7 +13,6 @@ def reshape_for_broadcast(freqs_cis: torch.Tensor, x: torch.Tensor):
     shape = [d if i == 1 or i == ndim - 1 else 1 for i, d in enumerate(x.shape)]
     return freqs_cis.view(*shape)
 
-
 """
 This file contains two functions: apply_rotary_emb_torch and apply_rotary_emb_jax.
 The functions should be functionally equivalent.
@@ -65,8 +64,5 @@ tensor from a numpy array.
 def jnp_ndarray_to_torch(x: jnp.ndarray) -> torch.Tensor:
     return torch.from_numpy(x.astype(np.float32))
 
-
 def torch_tensor_to_jnp(x: torch.Tensor) -> jnp.ndarray:
     return x.cpu().numpy().astype(np.float32)
-
-
