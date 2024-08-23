@@ -13,10 +13,12 @@ def reshape_for_broadcast(freqs_cis: torch.Tensor, x: torch.Tensor):
     shape = [d if i == 1 or i == ndim - 1 else 1 for i, d in enumerate(x.shape)]
     return freqs_cis.view(*shape)
 
+
 """
 This file contains two functions: apply_rotary_emb_torch and apply_rotary_emb_jax.
 The functions should be functionally equivalent.
 """
+
 
 # This should be equivalent to the below function (apply_rotary_emb_jax)
 def apply_rotary_emb_torch(
@@ -30,6 +32,7 @@ def apply_rotary_emb_torch(
     xq_out = torch.view_as_real(xq_ * freqs_cis).flatten(3)
     xk_out = torch.view_as_real(xk_ * freqs_cis).flatten(3)
     return xq_out.type_as(xq), xk_out.type_as(xk)
+
 
 # This should be equivalent to the above function (apply_rotary_emb_torch)
 def apply_rotary_emb_jax(
@@ -54,6 +57,7 @@ def apply_rotary_emb_jax(
     xk_out = jnp.stack((jnp.real(xk_out), jnp.imag(xk_out)), axis=-1).reshape(*xk_out.shape[:-1], -1)
 
     return xq_out.astype(dtype), xk_out.astype(dtype)
+
 """
 ---- HELPER FUNCTIONS ----
 
@@ -61,6 +65,7 @@ The following helper functions are meant to help with test writing.
 Note that you can use torch.from_numpy(ndarray) → Tensor to get a torch
 tensor from a numpy array.
 """
+
 def jnp_ndarray_to_torch(x: jnp.ndarray) -> torch.Tensor:
     return torch.from_numpy(x.astype(np.float32))
 
