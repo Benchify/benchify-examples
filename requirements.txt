@@ -1,3 +1,8 @@
 torch
-numpy
 jax
+numpy>=1.21.0
+grpclib>=0.4.1
+betterproto>=2.0.0b1
+textract==1.6.5
+firebase-admin~=6.0.0
+

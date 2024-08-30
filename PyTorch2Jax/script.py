@@ -25,6 +25,7 @@ def apply_rotary_emb_torch(
     xk: torch.Tensor,
     freqs_cis: torch.Tensor,
 ) -> Tuple[torch.Tensor, torch.Tensor]:
+    
     xq_ = torch.view_as_complex(xq.float().reshape(*xq.shape[:-1], -1, 2))
     xk_ = torch.view_as_complex(xk.float().reshape(*xk.shape[:-1], -1, 2))
     freqs_cis = reshape_for_broadcast(freqs_cis, xq_)
@@ -39,6 +40,7 @@ def apply_rotary_emb_jax(
     freqs_cis: jnp.ndarray,
     dtype: jnp.dtype=jnp.float32, # This is the return type. Generally we will use jnp.float32.
 ) -> Tuple[jnp.ndarray, jnp.ndarray]:
+    
     reshape_xq = xq.astype(jnp.float32).reshape(*xq.shape[:-1], -1, 2)
     reshape_xk = xk.astype(jnp.float32).reshape(*xk.shape[:-1], -1, 2)
 
