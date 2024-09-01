@@ -30,12 +30,14 @@ Constraints:
 word1 and word2 consist of lowercase English letters.
 """
 class Solution(object):
+    
     def minDistance(self, word1, word2):
         """
         :type word1: str
         :type word2: str
         :rtype: int
         """
+
         m = len(word1)
         n = len(word2)
 
@@ -46,7 +48,6 @@ class Solution(object):
             dp[i][0] = i
         for j in range(1, n):
             dp[0][j] = j
-
         # Recurrence relation
         for i in range(1, m):
             for j in range(1, n):
