@@ -1,5 +1,4 @@
-def minDistance(word1, word2):
-    
+def minDistance(word1, word2): 
     """
     :type word1: str
     :type word2: str
@@ -12,8 +11,10 @@ def minDistance(word1, word2):
     dp = [[0] * (n + 1) for _ in range(m + 1)]
 
     # Base cases: Transforming from empty string to word1 and word2
+    
     for i in range(m + 1):
         dp[i][0] = i
+    
     for j in range(n + 1):
         dp[0][j] = j
 
