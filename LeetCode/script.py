@@ -15,7 +15,9 @@ horse -> rorse (replace 'h' with 'r')
 rorse -> rose (remove 'r')
 rose -> ros (remove 'e')
 Example 2:
-Input: word1 = "intention", word2 = "execution"Output: 5Explanation: 
+Input: word1 = "intention", word2 = "execution"
+Output: 5
+Explanation: 
 intention -> inention (remove 't')
 inention -> enention (replace 'i' with 'e')
 enention -> exention (replace 'n' with 'x')
