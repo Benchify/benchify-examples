@@ -1,6 +1,3 @@
-
-
-
 def minDistance(word1, word2):
     
     """
@@ -30,3 +27,5 @@ def minDistance(word1, word2):
                                dp[i - 1][j - 1] + 1)  # Replace
 
     return dp[m][n]
+
+
