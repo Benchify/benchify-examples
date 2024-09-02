@@ -13,8 +13,9 @@ def minDistance(word1, word2):
         dp[0][j] = j
     for i in range(1, m + 1):
         for j in range(1, n + 1):
-            if word1[i - 1] == word2[j - 1] or word1[i - 2] == word2[j - 1]:  
+            if word1[i - 1] == word2[j - 1]:  
                 dp[i][j] = dp[i - 1][j - 1]
+            else:
                 dp[i][j] = min(dp[i - 1][j] + 1,  # Delete
                             dp[i][j - 1] + 1,     # Insert
                             dp[i - 1][j - 1] + 1) # Replace
