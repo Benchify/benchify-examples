@@ -2,7 +2,6 @@
 # The inputs are both strings and the output is a non-negative integer.
 # The possible edits are delete, insert, and replace.
 def minDistance(word1, word2):
-
     m = len(word1)
     n = len(word2)
 
@@ -23,7 +22,6 @@ def minDistance(word1, word2):
                 dp[i][j] = min(dp[i - 1][j] + 1,  # Delete
                             dp[i][j - 1] + 1,     # Insert
                             dp[i - 1][j - 1] + 1) # Replace
-
     return dp[m][n]
 
 
