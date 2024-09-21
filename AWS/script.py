@@ -1,8 +1,7 @@
 import boto3
 import json
 import pulp
-import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Initialize AWS clients
 cloudwatch = boto3.client('cloudwatch')
@@ -17,7 +16,7 @@ def put_metric_data(metric_name, value, unit):
                 'MetricName': metric_name,
                 'Value': value,
                 'Unit': unit,
-                'Timestamp': datetime.utcnow()
+                'Timestamp': datetime.now(timezone.utc)  # Fixed here
             }
         ]
     )
@@ -27,13 +26,13 @@ def put_record_to_kinesis(stream_name, data):
     response = kinesis.put_record(
         StreamName=stream_name,
         Data=json.dumps(data),
-        PartitionKey=str(datetime.utcnow().timestamp())
+        PartitionKey=str(datetime.now(timezone.utc).timestamp())  # Fixed here
     )
     return response
 
 def log_to_cloudwatch(log_group, log_stream, message):
     """Log a message to CloudWatch"""
-    timestamp = int(datetime.utcnow().timestamp() * 1000)
+    timestamp = int(datetime.now(timezone.utc).timestamp() * 1000)  # Fixed here
     cloudwatch.put_log_events(
         logGroupName=log_group,
         logStreamName=log_stream,
@@ -83,7 +82,7 @@ def optimize_production():
     # Send the results to Kinesis
     stream_name = 'ProductionOptimizationResults'
     data = {
-        'timestamp': str(datetime.utcnow()),
+        'timestamp': str(datetime.now(timezone.utc)),  # Fixed here
         'status': status,
         'product1': product1,
         'product2': product2,
@@ -107,7 +106,7 @@ if __name__ == "__main__":
     # Put a record to Kinesis Data Stream
     stream_name = 'MyKinesisStream'
     data = {
-        'timestamp': str(datetime.utcnow()),
+        'timestamp': str(datetime.now(timezone.utc)),  # Fixed here
         'message': 'Hello, Kinesis!'
     }
     response = put_record_to_kinesis(stream_name, data)
