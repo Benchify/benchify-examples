@@ -9,6 +9,7 @@ kinesis = boto3.client('kinesis')
 
 def put_metric_data(metric_name, value, unit):
     """Put custom metric data to CloudWatch"""
+
     cloudwatch.put_metric_data(
         Namespace='CustomMetrics',
         MetricData=[
@@ -23,6 +24,7 @@ def put_metric_data(metric_name, value, unit):
 
 def put_record_to_kinesis(stream_name, data):
     """Put a record to Kinesis Data Stream"""
+
     response = kinesis.put_record(
         StreamName=stream_name,
         Data=json.dumps(data),
@@ -32,6 +34,7 @@ def put_record_to_kinesis(stream_name, data):
 
 def log_to_cloudwatch(log_group, log_stream, message):
     """Log a message to CloudWatch"""
+
     timestamp = int(datetime.now(timezone.utc).timestamp() * 1000)  # Fixed here
     cloudwatch.put_log_events(
         logGroupName=log_group,
@@ -46,6 +49,7 @@ def log_to_cloudwatch(log_group, log_stream, message):
 
 def optimize_production():
     """Optimize production using linear programming and log the results to CloudWatch"""
+    
     log_group = 'ProductionOptimizationLogs'
     log_stream = 'OptimizationResults'
 
