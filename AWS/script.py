@@ -2,6 +2,7 @@ import boto3
 import json
 import pulp
 from datetime import datetime, timezone
+import time
 
 # Initialize AWS clients
 cloudwatch = boto3.client('cloudwatch')
@@ -28,26 +29,25 @@ def put_record_to_kinesis(stream_name, data):
     response = kinesis.put_record(
         StreamName=stream_name,
         Data=json.dumps(data),
-        PartitionKey=str(datetime.now(timezone.utc).timestamp())  # Fixed here
+        PartitionKey=str(datetime.now(timezone.utc).timestamp())
     )
     return response
 
 def log_to_cloudwatch(log_group, log_stream, message):
-    """Log a message to CloudWatch"""
-
-    timestamp = int(datetime.now(timezone.utc).timestamp() * 1000)  # Fixed here
-    cloudwatch.put_log_events(
+    cloudwatch_logs = boto3.client('logs')
+    cloudwatch_logs.put_log_events(
         logGroupName=log_group,
         logStreamName=log_stream,
         logEvents=[
             {
-                'timestamp': timestamp,
-                'message': message
-            }
+                'timestamp': int(time.time() * 1000),
+                'message': message,
+            },
         ]
     )
 
 def optimize_production():
+    
     """Optimize production using linear programming and log the results to CloudWatch"""
     
     log_group = 'ProductionOptimizationLogs'
