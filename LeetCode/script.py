@@ -2,7 +2,6 @@
 # The inputs are both strings and the output is a non-negative integer.
 # The possible edits are delete, insert, and replace.
 def minDistance(word1, word2):
-
     m = len(word1)
     n = len(word2)
 
