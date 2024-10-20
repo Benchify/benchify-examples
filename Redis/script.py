@@ -11,6 +11,7 @@ def redis_operations():
     value = redis_client.get('greeting')
     print(value.decode('utf-8'))  # Decode bytes to string
 
+
     # Increment a counter
     redis_client.incr('visitor_count')
 
