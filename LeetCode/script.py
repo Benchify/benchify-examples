@@ -1,6 +1,7 @@
 # Returns an edit distance which satisfies all the rules of a metric space.
 # The inputs are both strings and the output is a non-negative integer.
 # The possible edits are delete, insert, and replace.
+
 def minDistance(word1, word2):
 
     m = len(word1)
