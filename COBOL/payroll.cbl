@@ -32,11 +32,9 @@
 
        *> Retrieve the first argument using COMMAND-LINE
            ACCEPT DYNAMIC-FILE-NAME FROM COMMAND-LINE
-           DISPLAY "DEBUG: DYNAMIC-FILE-NAME = [" DYNAMIC-FILE-NAME "]"
 
        *> Now open the file using DYNAMIC-FILE-NAME
            OPEN INPUT EMPLOYEE-FILE
-           DISPLAY "DEBUG: FILE-STATUS AFTER OPEN = " FILE-STATUS
            IF FILE-STATUS NOT = "00"
                DISPLAY "Error opening file: " DYNAMIC-FILE-NAME
                STOP RUN
@@ -51,10 +49,6 @@
                    AT END
                        MOVE "EOF" TO END-OF-FILE
                    NOT AT END
-                       *> Debug: Show raw data
-                       DISPLAY "DEBUG: Raw record read = ["
-                               EMP-ID HOURS-WORKED HOURLY-RATE TAX-DEDUCTION "]"
-
                        COMPUTE GROSS-PAY = HOURS-WORKED * HOURLY-RATE
                        COMPUTE NET-PAY = GROSS-PAY - TAX-DEDUCTION
                        DISPLAY EMP-ID "," GROSS-PAY "," NET-PAY
