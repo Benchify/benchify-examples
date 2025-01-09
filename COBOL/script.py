@@ -141,8 +141,8 @@ def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[
             
             # Debug prints
             print(f"Employee ID: {emp_id}")
-            print(f"Gross Pay:  {gross_pay:.2f}")
-            print(f"Net Pay:    {net_pay:.2f}")
+            print(f"Gross Pay:  ${gross_pay:.2f}")
+            print(f"Net Pay:    ${net_pay:.2f}")
             results.append((gross_pay, net_pay))
         except KeyError as e:
             print(f"Missing required column in output: {e}. Available columns: {reader.fieldnames}")
