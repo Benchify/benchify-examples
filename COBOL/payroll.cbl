@@ -24,17 +24,14 @@
        WORKING-STORAGE SECTION.
        01 GROSS-PAY              PIC 9(7)V99.
        01 NET-PAY                PIC 9(7)V99.
-       01 END-OF-FILE            PIC X VALUE SPACE.
+       01 END-OF-FILE            PIC X(3) VALUE SPACES.
        01 DYNAMIC-FILE-NAME      PIC X(100).
        01 FILE-STATUS            PIC XX.
 
        PROCEDURE DIVISION.
 
-       *> Retrieve the first argument with C$GETARG
-           CALL "C$GETARG" USING
-               BY VALUE 1
-               BY REFERENCE DYNAMIC-FILE-NAME
-       *> Debug: see what we got
+       *> Retrieve the first argument using COMMAND-LINE
+           ACCEPT DYNAMIC-FILE-NAME FROM COMMAND-LINE
            DISPLAY "DEBUG: DYNAMIC-FILE-NAME = [" DYNAMIC-FILE-NAME "]"
 
        *> Now open the file using DYNAMIC-FILE-NAME
