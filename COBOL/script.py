@@ -94,6 +94,7 @@ def format_pic_9_5_v_99(num: float) -> str:
         20.0 -> "0002000" (represents 20.00)
         15.50 -> "0001550" (represents 15.50)
     """
+
     # Multiply by 100, round, then zero-pad to length=7
     value_as_int = int(round(num * 100))
     return f"{value_as_int:07d}"
@@ -213,9 +214,11 @@ def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float,
     Returns:
         List of tuples containing (gross_pay, net_pay) for each employee
         
-    Note:
-        Results should exactly match process_payroll_cobol() output
+    PROPERTY:
+        Results should exactly match process_payroll_cobol() output.
+        IE, for all ers: List[EmployeeRecord], process_payroll(er) == process_payroll_cobol(er)
     """
+    
     results = []
     for record in employee_records:
         # Calculate gross pay and net pay
