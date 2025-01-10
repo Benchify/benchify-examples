@@ -5,6 +5,7 @@ import os
 from dataclasses import dataclass
 from typing import List, Tuple
 import platform
+import math
 
 @dataclass
 class EmployeeRecord:
@@ -93,11 +94,27 @@ def format_pic_9_5_v_99(num: float) -> str:
     Example:
         20.0 -> "0002000" (represents 20.00)
         15.50 -> "0001550" (represents 15.50)
-    """
+        
+    Raises:
+        ValueError: If num is NaN, Inf, -Inf, or would result in a number too large
+                   to represent in PIC 9(5)V99 format
+    """ 
+    if math.isnan(num):
+        raise ValueError("Input cannot be NaN")
+        
+    if math.isinf(num):
+        raise ValueError("Input cannot be infinite")
+        
+    # Check range - PIC 9(5)V99 can only handle 0 to 99999.99
+    if num < 0 or num > 99999.99:
+        raise ValueError("Number out of range for PIC 9(5)V99 format (0 to 99999.99)")
 
-    # Multiply by 100, round, then zero-pad to length=7
-    value_as_int = int(round(num * 100))
-    return f"{value_as_int:07d}"
+    try:
+        # Multiply by 100, round, then zero-pad to length=7
+        value_as_int = int(round(num * 100))
+        return f"{value_as_int:07d}"
+    except OverflowError:
+        raise ValueError("Number too large to represent in PIC 9(5)V99 format")
 
 def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]:
     """
@@ -217,8 +234,8 @@ def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float,
     PROPERTY:
         Results should exactly match process_payroll_cobol() output.
         IE, for all ers: List[EmployeeRecord], process_payroll(er) == process_payroll_cobol(er)
-    """
     
+    """
     results = []
     for record in employee_records:
         # Calculate gross pay and net pay
