@@ -227,7 +227,7 @@ def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[
 
     return results
 
-def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]: # Python translation of COBOL code
+def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]:
     """ 
     Pure Python implementation of the COBOL payroll processing logic.
     
@@ -241,20 +241,20 @@ def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float,
     Returns:
         List of tuples containing (gross_pay, net_pay) for each employee
     
-    TEST THIS PROPERTY:
-        Results should exactly match process_payroll_cobol() output, including thrown exceptions.
-        IE, for all ers: List[EmployeeRecord], process_payroll(er) == process_payroll_cobol(er),
-        unless either side throws an Exception, in which case the other side should throw an identical
-        exception.
+    ** TEST THIS PROPERTY **:
+        Results should exactly match process_payroll_cobol() output, including thrown exceptions. 
+        IE, for all ers: List[EmployeeRecord], process_payroll(er) == process_payroll_cobol(er), 
+        unless either side throws an Exception, in which case the other side should throw an identical 
+        exception. 
     """
-    results = []
-    for record in employee_records:
-        # Calculate gross pay and net pay
-        gross_pay = record.hours_worked * record.hourly_rate
-        net_pay = gross_pay - record.tax_deduction
-        # Display results
-        print(f"Employee ID: {record.emp_id}")
-        print(f"Gross Pay: ${gross_pay:.2f}")
-        print(f"Net Pay:   ${net_pay:.2f}")
-        results.append((gross_pay, net_pay))
-    return results # this should return the same result as process_payroll_cobol(employee_records)
+    results = [] 
+    for record in employee_records: 
+        # Calculate gross pay and net pay 
+        gross_pay = record.hours_worked * record.hourly_rate 
+        net_pay = gross_pay - record.tax_deduction 
+        # Display results 
+        print(f"Employee ID: {record.emp_id}") 
+        print(f"Gross Pay: ${gross_pay:.2f}") 
+        print(f"Net Pay:   ${net_pay:.2f}") 
+        results.append((gross_pay, net_pay)) 
+    return results # this SHOULD return the same result as process_payroll_cobol(employee_records)
