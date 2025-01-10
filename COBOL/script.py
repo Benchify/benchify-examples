@@ -42,7 +42,10 @@ def install_cobc_and_compile_script():
         try:
             os_name = platform.system()
             if os_name == "Linux":
-                distro = platform.linux_distribution()[0].lower()
+                try:
+                    distro = platform.linux_distribution()[0].lower()
+                except AttributeError:
+                    distro = "ubuntu"
                 if "ubuntu" in distro or "debian" in distro:
                     subprocess.run(["apt", "install", "-y", "gnucobol"], check=True)
                 elif "fedora" in distro or "centos" in distro:
@@ -77,6 +80,8 @@ def install_cobc_and_compile_script():
     except subprocess.CalledProcessError as e:
         print("Error compiling COBOL script.")
         raise e
+
+install_cobc_and_compile_script()
 
 def format_pic_9_5_v_99(num: float) -> str:
     """
