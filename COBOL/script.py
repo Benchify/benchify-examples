@@ -66,14 +66,19 @@ def install_cobc_and_compile_script():
     else:
         print("GNU COBOL (cobc) is already installed.")
     
-    if not os.path.exists("payroll.cbl"):
-        raise FileNotFoundError("The COBOL script 'payroll.cbl' was not found.")
+    # Get the directory where this script resides
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    cobol_script_path = os.path.join(script_dir, "payroll.cbl")
+    
+    if not os.path.exists(cobol_script_path):
+        raise FileNotFoundError(f"The COBOL script 'payroll.cbl' was not found in {script_dir}")
     
     # Always recompile to ensure we have the latest version
-    if os.path.exists("payroll"):
-        os.remove("payroll")
+    output_path = os.path.join(script_dir, "payroll")
+    if os.path.exists(output_path):
+        os.remove(output_path)
     print("Compiling payroll.cbl...")
-    compile_command = ["cobc", "-x", "-o", "payroll", "payroll.cbl"]
+    compile_command = ["cobc", "-x", "-o", output_path, cobol_script_path]
     try:
         subprocess.run(compile_command, check=True)
         print("Compilation successful.")
@@ -222,36 +227,34 @@ def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[
 
     return results
 
-def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]: # Python translation of cobol code
+def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]: # Python translation of COBOL code
     """ 
-    Pure Python implementation of the COBOL payroll processing logic. 
-     
-    This function performs the same calculations as the COBOL program but in Python. 
-    It should perform the exact same result as process_payroll_cobol on all possible inputs, 
-    and throw the same exceptions in the same scenarios. 
-     
-    Args: 
-        employee_records: List of EmployeeRecord objects containing payroll data 
-         
-    Returns: 
-        List of tuples containing (gross_pay, net_pay) for each employee 
-         
-    TEST THIS PROPERTY: 
-        Results should exactly match process_payroll_cobol() output, including thrown exceptions.  
-        IE, for all ers: List[EmployeeRecord], process_payroll(er) == process_payroll_cobol(er),  
-        unless either side throws an Exception, in which case the other side should throw an identical  
-        exception.  
+    Pure Python implementation of the COBOL payroll processing logic.
+    
+    This function performs the same calculations as the COBOL program but in Python.
+    It should perform the exact same result as process_payroll_cobol on all possible inputs,
+    and throw the same exceptions in the same scenarios.
+    
+    Args:
+        employee_records: List of EmployeeRecord objects containing payroll data
+    
+    Returns:
+        List of tuples containing (gross_pay, net_pay) for each employee
+    
+    TEST THIS PROPERTY:
+        Results should exactly match process_payroll_cobol() output, including thrown exceptions.
+        IE, for all ers: List[EmployeeRecord], process_payroll(er) == process_payroll_cobol(er),
+        unless either side throws an Exception, in which case the other side should throw an identical
+        exception.
     """
-    results = [] 
-    for record in employee_records: 
-        # Calculate gross pay and net pay 
-        gross_pay = record.hours_worked * record.hourly_rate 
-        net_pay = gross_pay - record.tax_deduction 
-        
-        # Display results 
-        print(f"Employee ID: {record.emp_id}") 
-        print(f"Gross Pay: ${gross_pay:.2f}") 
-        print(f"Net Pay:   ${net_pay:.2f}") 
-        results.append((gross_pay, net_pay)) 
-
-    return results # this SHOULD return the same result as process_payroll_cobol(employee_records)
+    results = []
+    for record in employee_records:
+        # Calculate gross pay and net pay
+        gross_pay = record.hours_worked * record.hourly_rate
+        net_pay = gross_pay - record.tax_deduction
+        # Display results
+        print(f"Employee ID: {record.emp_id}")
+        print(f"Gross Pay: ${gross_pay:.2f}")
+        print(f"Net Pay:   ${net_pay:.2f}")
+        results.append((gross_pay, net_pay))
+    return results # this should return the same result as process_payroll_cobol(employee_records)
