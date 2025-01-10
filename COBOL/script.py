@@ -153,7 +153,9 @@ def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[
 
     # 3) Write data in the fixed-length format
     print("=== Debug: Writing the following lines to input file ===")
-    with open(temp_file, 'w', newline='') as f:
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    temp_file_path = os.path.join(script_dir, temp_file)
+    with open(temp_file_path, 'w', newline='') as f:
         for record in employee_records:
             # EMP-ID: 5 chars
             emp_id_str = record.emp_id[:5].ljust(5)
@@ -173,9 +175,8 @@ def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[
     print("=======================================================")
 
     # 4) Run the compiled COBOL program with the input file as an argument
-    print(f"Running the COBOL payroll program with file: {temp_file}")
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    run_command = ["./payroll", temp_file]
+    print(f"Running the COBOL payroll program with file: {temp_file_path}")
+    run_command = ["./payroll", temp_file_path]
 
     try:
         result = subprocess.run(run_command, capture_output=True, text=True, check=True, cwd=script_dir)
