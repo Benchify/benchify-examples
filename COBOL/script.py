@@ -174,10 +174,11 @@ def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[
 
     # 4) Run the compiled COBOL program with the input file as an argument
     print(f"Running the COBOL payroll program with file: {temp_file}")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
     run_command = ["./payroll", temp_file]
 
     try:
-        result = subprocess.run(run_command, capture_output=True, text=True, check=True)
+        result = subprocess.run(run_command, capture_output=True, text=True, check=True, cwd=script_dir)
     except subprocess.CalledProcessError as e:
         print(f"Error running COBOL program. Exit code: {e.returncode}")
         print(f"Command that failed: {' '.join(e.cmd)}")
