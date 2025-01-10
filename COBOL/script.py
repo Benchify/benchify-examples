@@ -8,13 +8,34 @@ import platform
 
 @dataclass
 class EmployeeRecord:
+    """
+    Data class representing an employee's payroll record.
+    
+    Attributes:
+        emp_id: Employee ID string
+        hours_worked: Number of hours worked in pay period
+        hourly_rate: Pay rate per hour
+        tax_deduction: Amount to deduct for taxes
+    """
     emp_id: str
     hours_worked: float
     hourly_rate: float
     tax_deduction: float
 
 def install_cobc_and_compile_script():
-    """Installs GNU COBOL if it's not already installed."""
+    """
+    Installs GNU COBOL compiler if not present and compiles the COBOL payroll script.
+    
+    This function:
+    1. Checks if cobc compiler is installed
+    2. If not installed, attempts to install it using the appropriate package manager
+    3. Compiles payroll.cbl into an executable
+    
+    Raises:
+        FileNotFoundError: If payroll.cbl is missing
+        subprocess.CalledProcessError: If installation or compilation fails
+        Exception: If on an unsupported OS or Linux distribution
+    """
     if shutil.which("cobc") is None:
         print("GNU COBOL (cobc) is not installed. Installing it now...")
         try:
@@ -58,17 +79,44 @@ def install_cobc_and_compile_script():
 
 def format_pic_9_5_v_99(num: float) -> str:
     """
-    For PIC 9(5)V99, we need 7 numeric digits total, with an implied
-    decimal point before the last two digits. Example:
-      20.0 -> 20.00 -> multiply by 100 = 2000 -> zero-pad to 7 -> "0002000"
+    Formats a number according to COBOL's PIC 9(5)V99 format specification.
+    
+    This creates a 7-digit string where the last 2 digits represent decimal places.
+    The decimal point is implied (not actually present in output).
+    
+    Args:
+        num: The float number to format
+        
+    Returns:
+        A 7-character string with leading zeros
+        
+    Example:
+        20.0 -> "0002000" (represents 20.00)
+        15.50 -> "0001550" (represents 15.50)
     """
     # Multiply by 100, round, then zero-pad to length=7
     value_as_int = int(round(num * 100))
     return f"{value_as_int:07d}"
 
 def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]:
-    """Compiles and runs the COBOL payroll script, then processes its output."""
-
+    """
+    Processes payroll by running a COBOL program and parsing its output.
+    
+    This function:
+    1. Ensures COBOL compiler is installed
+    2. Creates a temporary input file with employee data
+    3. Runs the COBOL payroll program
+    4. Parses the CSV output to extract gross and net pay
+    
+    Args:
+        employee_records: List of EmployeeRecord objects containing payroll data
+        
+    Returns:
+        List of tuples containing (gross_pay, net_pay) for each employee
+        
+    Raises:
+        Various exceptions from subprocess calls and file operations
+    """
     # 1) Ensure GNU COBOL is installed & compile the COBOL code
     install_cobc_and_compile_script()
 
@@ -151,10 +199,23 @@ def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[
 
     return results
 
-# Modernized version of process_payroll_cobol.  This is meant to produce exactly
-# the same result, but in Python.
 def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]:
-    """Processes payroll directly using Python logic."""
+    """
+    Pure Python implementation of the COBOL payroll processing logic.
+    
+    This function performs the same calculations as the COBOL program but in Python.
+    It should perform the exact same result as process_payroll_cobol on all possible inputs,
+    and throw the same exceptions in the same scenarios.
+    
+    Args:
+        employee_records: List of EmployeeRecord objects containing payroll data
+        
+    Returns:
+        List of tuples containing (gross_pay, net_pay) for each employee
+        
+    Note:
+        Results should exactly match process_payroll_cobol() output
+    """
     results = []
     for record in employee_records:
         # Calculate gross pay and net pay
