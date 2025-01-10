@@ -222,7 +222,7 @@ def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[
 
     return results
 
-def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]: 
+def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]:
     """
     Pure Python implementation of the COBOL payroll processing logic.
     
@@ -236,14 +236,15 @@ def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float,
     Returns:
         List of tuples containing (gross_pay, net_pay) for each employee
         
-    PROPERTY:
-        Results should exactly match process_payroll_cobol() output, including thrown exceptions.
-        IE, for all ers: List[EmployeeRecord], process_payroll(er) == process_payroll_cobol(er),
-        unless either side throws an Exception, in which case the other side should throw an identical
-        exception.
+    TEST THIS PROPERTY:
+        Results should exactly match process_payroll_cobol() output, including thrown exceptions. 
+        IE, for all ers: List[EmployeeRecord], process_payroll(er) == process_payroll_cobol(er), 
+        unless either side throws an Exception, in which case the other side should throw an identical 
+        exception. 
     """
     results = []
     for record in employee_records:
+        
         # Calculate gross pay and net pay
         gross_pay = record.hours_worked * record.hourly_rate
         net_pay = gross_pay - record.tax_deduction
@@ -255,4 +256,4 @@ def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float,
 
         results.append((gross_pay, net_pay))
 
-    return results # should return the same result as process_payroll_cobol(employee_records)
+    return results # this should return the same result as process_payroll_cobol(employee_records)
