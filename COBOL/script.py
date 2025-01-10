@@ -19,9 +19,9 @@ class EmployeeRecord:
         tax_deduction: Amount to deduct for taxes
     """
     emp_id: str
-    hours_worked: float
-    hourly_rate: float
-    tax_deduction: float
+    hours_worked: float # cannot be an inf or NaN
+    hourly_rate: float # cannot be an inf or NaN
+    tax_deduction: float # cannot be an inf or NaN
 
 def install_cobc_and_compile_script():
     """
@@ -217,7 +217,7 @@ def process_payroll_cobol(employee_records: List[EmployeeRecord]) -> List[Tuple[
 
     return results
 
-def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]:
+def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float, float]]: 
     """
     Pure Python implementation of the COBOL payroll processing logic.
     
@@ -232,9 +232,10 @@ def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float,
         List of tuples containing (gross_pay, net_pay) for each employee
         
     PROPERTY:
-        Results should exactly match process_payroll_cobol() output.
-        IE, for all ers: List[EmployeeRecord], process_payroll(er) == process_payroll_cobol(er)
-    
+        Results should exactly match process_payroll_cobol() output, including thrown exceptions.
+        IE, for all ers: List[EmployeeRecord], process_payroll(er) == process_payroll_cobol(er),
+        unless either side throws an Exception, in which case the other side should throw an identical
+        exception.
     """
     results = []
     for record in employee_records:
@@ -249,4 +250,4 @@ def process_payroll(employee_records: List[EmployeeRecord]) -> List[Tuple[float,
 
         results.append((gross_pay, net_pay))
 
-    return results
+    return results # should return the same result as process_payroll_cobol(employee_records)
