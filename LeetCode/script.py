@@ -4,6 +4,7 @@
 def minDistance(word1, word2):
 
     m = len(word1)
+    
     n = len(word2)
 
     # Initialize dp array of size (m+1) x (n+1)
