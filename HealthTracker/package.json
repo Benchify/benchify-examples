@@ -1,0 +1,27 @@
+{
+  "name": "healthtracker",
+  "version": "1.0.0",
+  "description": "A library of useful functions for health tracking applications",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "health",
+    "fitness",
+    "tracking",
+    "hrv",
+    "heartrate"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
