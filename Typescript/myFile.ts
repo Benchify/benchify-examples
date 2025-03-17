@@ -11,7 +11,7 @@ function getStringDistance(str1: string, str2: string): number {
     const m = str1.length;
     const n = str2.length;
 
-    // Create a matrix of size (m+1) x (n+1)
+    // create a matrix of size (m+1) x (n+1)
     const dp: number[][] = Array(m + 1).fill(null)
         .map(() => Array(n + 1).fill(0));
 
