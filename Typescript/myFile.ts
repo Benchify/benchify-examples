@@ -23,6 +23,8 @@ function getStringDistance(str1: string, str2: string): number {
         dp[0][j] = j;
     }
 
+    console.log(dp);
+
     // Fill the matrix
     for (let i = 1; i <= m; i++) {
         for (let j = 1; j <= n; j++) {
